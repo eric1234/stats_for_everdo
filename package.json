@@ -1,0 +1,28 @@
+{
+  "name": "everdo_stats",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "start": "sirv public --no-clear"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "*",
+    "@rollup/plugin-node-resolve": "*",
+    "rollup": "*",
+    "rollup-plugin-css-only": "*",
+    "rollup-plugin-livereload": "*",
+    "rollup-plugin-svelte": "*",
+    "rollup-plugin-terser": "*",
+    "svelte": "*",
+    "luxon": "*",
+    "lodash": "*",
+    "chart.js": "*",
+    "chartjs-adapter-luxon": "*",
+    "deepmerge": "*"
+  },
+  "dependencies": {
+    "sirv-cli": "*"
+  }
+}

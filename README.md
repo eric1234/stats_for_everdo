@@ -1,4 +1,5 @@
-Stats for [Everdo](https://everdo.net/)
+Stats for [Everdo](https://everdo.net/). Use it for free at
+https://eric1234.github.io/stats_for_everdo/
 
 Features
 ========

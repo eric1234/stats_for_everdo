@@ -101,6 +101,8 @@
     task.labels = task.labels.concat(project.labels)
   })
 
+  const tasksWithoutProjects = tasks.filter(t => !t.project)
+
   createdOn = createdOn.startOf('day')
 
   // Default config
@@ -158,7 +160,7 @@
 
 <div class="row row-cols-1 row-cols-xl-2">
   <ChartCard>
-    <TopOldest { lastDay } { tasks } title="Top Oldest Tasks" />
+    <TopOldest { lastDay } tasks={ tasksWithoutProjects } title="Top Oldest Tasks" />
   </ChartCard>
 
   <ChartCard>

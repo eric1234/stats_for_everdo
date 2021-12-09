@@ -36,7 +36,7 @@
       label: `# ${tag.title} - ${total}`,
       data: counts,
     }
-  })
+  }).filter(tag => !Object.values(tag.data).every(v => v == 0))
 </script>
 
 <LineChart labels={ days } { datasets } options={ chartOptions } />

@@ -6,7 +6,7 @@
 	import Analytics from './Analytics.svelte'
 </script>
 
-<main class="container my-3">
+<main class="container mt-3 my-5">
 	{#if empty}
 		<ChooseFile bind:data />
 	{:else}

@@ -96,9 +96,18 @@
     // Project might be deleted even though task on it was done. Skip
     if( !project ) return
 
+    // Make association to object rather than ID
     task.project = project
+
+    // Concat projects tags to tasks so completed the tag affects tag graphs
     task.areas = task.areas.concat(project.areas)
     task.labels = task.labels.concat(project.labels)
+
+    // If project is completed before task then assume task completion date
+    // is the same a task completion date. Otherwise the task will be considered
+    // completed when the archive happens which is less relevant
+    if( task.completedAt && project.completedAt && task.completedAt > project.completedAt )
+      task.completedAt = project.completedAt
   })
 
   const tasksWithoutProjects = tasks.filter(t => !t.project)

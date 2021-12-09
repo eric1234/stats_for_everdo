@@ -27,8 +27,8 @@
           Rolling Avg Days
           <Help>
             Averages with the values from the given previous days to smooth
-            out the graph to make trends more appearant. Set to 1 to effectively
-            remove rolling averages and see raw data.
+            out the graph to make trends more appearant if date range is large.
+            A value of 1 effectively removes rolling averages and shows raw data.
           </Help>
         </label>
         <input type="number" class="form-control" id="rolling" bind:value={ rollingDays } min="1" style="width: 10rem" />

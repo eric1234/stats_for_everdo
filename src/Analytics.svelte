@@ -85,9 +85,16 @@
   createdOn = createdOn.startOf('day')
 
   // Default config
-  let startOn = createdOn.toISODate()
-  let endOn = DateTime.now().toISODate()
-  let rollingDays = 7
+
+  let startOn = DateTime.now().minus({weeks: 1})
+  if( startOn < createdOn ) startOn = createdOn
+  startOn = startOn.toISODate()
+
+  let endOn = DateTime.now().minus({day: 1})
+  if( endOn < createdOn ) endOn = createdOn
+  endOn = endOn.toISODate()
+
+  let rollingDays = 1
   let maintenance = true
   let projectsOnly = false
 

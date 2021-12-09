@@ -38,7 +38,7 @@
 
   // Using `reduce` instead of `filter` chained to a `map` for just a single
   // iteration of all tasks
-  const [tasks, projects] = data.items.reduce((memo, item) => {
+  const [tasks, projectsById] = data.items.reduce((memo, item) => {
     const ignoreTypes = [
       // Lists (of notes) are not tasks or projects
       'l',
@@ -54,13 +54,14 @@
     if( ignoreTypes.includes(item.type) || isDeleted || item.schedule ) return memo
 
     const record = new Task()
+    record.id = item.id
     record.title = item.title
     record.createdAt = DateTime.fromSeconds(item.created_on)
     if( record.createdAt < createdOn ) createdOn = record.createdAt
     if( item.completed_on )
       record.completedAt = DateTime.fromSeconds(item.completed_on)
     record.maintenance = !!item.recurrent_task_id
-    record.project = !!item.parent_id
+    record.project = item.parent_id
 
     item.tags.forEach(tag_id => {
       const tag = tags[tag_id]
@@ -75,12 +76,30 @@
     })
 
     if( item.type == 'p' )
-      memo[1].push(record)
+      memo[1][record.id] = record
     else
       memo[0].push(record)
 
     return memo
-  }, [[], []])
+  }, [[], {}])
+  const projects = Object.values(projectsById)
+
+  // Associating project has to happen after the main loop since task might be
+  // before project in data file. While making the association copy down areas
+  // and labels so the task shows up in all the right buckets
+  tasks.forEach(task => {
+    // Task may not be part of a project
+    if( !task.project ) return
+
+    const project = projectsById[task.project]
+
+    // Project might be deleted even though task on it was done. Skip
+    if( !project ) return
+
+    task.project = project
+    task.areas = task.areas.concat(project.areas)
+    task.labels = task.labels.concat(project.labels)
+  })
 
   createdOn = createdOn.startOf('day')
 

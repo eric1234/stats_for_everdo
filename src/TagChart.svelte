@@ -35,8 +35,11 @@
     return {
       label: `# ${tag.title} - ${total}`,
       data: counts,
+      total: total,
     }
-  }).filter(tag => !Object.values(tag.data).every(v => v == 0))
+  })
+    .sort((a, b) => b.total - a.total)
+    .filter(tag => tag.total > 0)
 </script>
 
 <LineChart labels={ days } { datasets } options={ chartOptions } />

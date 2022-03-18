@@ -21,10 +21,9 @@
   const tags = data.tags.reduce((memo, tag) => {
     const record = { title: tag.title }
 
+    if( !['l', 'a'].includes(tag.type) ) return memo
+
     switch( tag.type ) {
-      case 'c':
-        record.type = 'Contact'
-        break
       case 'l':
         record.type = 'Label'
         break
@@ -65,13 +64,15 @@
 
     item.tags.forEach(tag_id => {
       const tag = tags[tag_id]
-      switch( tag.type ) {
-        case 'Area':
-          record.areas.push(tag)
-          break
-        case 'Label':
-          record.labels.push(tag)
-          break
+      if( tag ) {
+        switch( tag.type ) {
+          case 'Area':
+            record.areas.push(tag)
+            break
+          case 'Label':
+            record.labels.push(tag)
+            break
+        }
       }
     })
 
@@ -154,13 +155,15 @@
     <Open { days } { rollingDays } { projects } tasks={ filteredTasks } />
   </ChartCard>
 
-  <ChartCard>
-    <Areas { days } { rollingDays } tasks={ filteredTasks } { tags } />
-  </ChartCard>
+  {#if Object.values(tags).length > 0}
+    <ChartCard>
+      <Areas { days } { rollingDays } tasks={ filteredTasks } { tags } />
+    </ChartCard>
 
-  <ChartCard>
-    <Labels { days } { rollingDays } tasks={ filteredTasks } { tags } />
-  </ChartCard>
+    <ChartCard>
+      <Labels { days } { rollingDays } tasks={ filteredTasks } { tags } />
+    </ChartCard>
+  {/if}
 
   <ChartCard>
     <TurnAround { days } { rollingDays } tasks={ filteredTasks } />
